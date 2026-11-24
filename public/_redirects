@@ -1,0 +1,3 @@
+/*  SPA fallback para Cloudflare Pages.
+    Todas las rutas cliente (React Router) se resuelven con index.html. */
+/*  /index.html  200

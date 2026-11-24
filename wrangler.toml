@@ -1,0 +1,13 @@
+# Configuración de Cloudflare Pages.
+# Este proyecto es un sitio estático (SPA). No requiere funciones de servidor.
+#
+# En Cloudflare Pages:
+#   - Build command:        npm run build
+#   - Build output dir:     dist
+#   - Node version:         18 o superior (Settings > Environment variables > NODE_VERSION)
+#
+# El archivo public/_redirects incluye el fallback SPA necesario para React Router.
+
+name = "barberia-template"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "dist"

@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   Tokens de tema. Estos valores son el respaldo; applyTheme() los sobrescribe
+   en tiempo de ejecución con los colores de la empresa.
+   Formato "R G B" para permitir opacidades en Tailwind.
+   ============================================================================= */
+:root {
+  --brand-primary: 201 162 39; /* #C9A227 dorado */
+  --brand-primary-soft: 232 199 102;
+  --ink-950: 11 11 12; /* #0B0B0C */
+  --ink-900: 21 21 24;
+  --ink-800: 31 31 36;
+  --ink-700: 45 45 52;
+  --ink-600: 63 63 72;
+}
+
+@layer base {
+  * {
+    @apply border-ink-800;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-ink-950 text-white/90 font-sans antialiased;
+    background-image: radial-gradient(
+        1200px 600px at 50% -10%,
+        rgb(var(--brand-primary) / 0.08),
+        transparent 60%
+      ),
+      linear-gradient(180deg, #0b0b0c 0%, #0e0e10 100%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-white;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: rgb(var(--brand-primary) / 0.35);
+    color: #fff;
+  }
+
+  /* Scrollbar discreta */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--ink-950));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--ink-700));
+    border-radius: 999px;
+    border: 2px solid rgb(var(--ink-950));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--brand-primary) / 0.6);
+  }
+
+  input,
+  textarea,
+  select {
+    color-scheme: dark;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--brand-primary) / 0.8);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .surface {
+    @apply rounded-2xl border border-ink-800 bg-ink-900/70 backdrop-blur-sm;
+  }
+
+  .gold-rule {
+    @apply h-px w-12 bg-gradient-to-r from-brand to-transparent;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.22em] text-brand;
+  }
+}
+
+@layer utilities {
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
