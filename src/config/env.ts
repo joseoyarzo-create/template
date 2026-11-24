@@ -17,13 +17,28 @@ function readNumber(key: keyof ImportMetaEnv, fallback: number): number {
   return Number.isFinite(value) && value > 0 ? value : fallback
 }
 
+/** Slug del negocio del ejemplo incluido en supabase/migrations/0004_seed_example.sql. */
+const DEFAULT_BUSINESS_SLUG = 'barberia-demo'
+
+/**
+ * Lee el slug público del negocio.
+ *
+ * Si VITE_BUSINESS_SLUG no está definida, o llega con el *nombre* de la
+ * variable como valor (error frecuente al crearla en paneles como Vercel),
+ * se usa el slug del ejemplo de la plantilla para no dejar el sitio inutilizado.
+ */
+function readBusinessSlug(): string {
+  const raw = read('VITE_BUSINESS_SLUG')
+  return !raw || raw === 'VITE_BUSINESS_SLUG' ? DEFAULT_BUSINESS_SLUG : raw
+}
+
 export const env = {
   /** URL del proyecto Supabase. Ej: https://abcd.supabase.co */
   supabaseUrl: read('VITE_SUPABASE_URL'),
   /** Clave pública (anon / publishable). NUNCA la service_role. */
   supabaseAnonKey: read('VITE_SUPABASE_ANON_KEY'),
   /** Identificador público de esta instalación (coincide con businesses.slug). */
-  businessSlug: read('VITE_BUSINESS_SLUG'),
+  businessSlug: readBusinessSlug(),
   /** Anticipación mínima para reservar, en minutos. */
   minLeadMinutes: readNumber('VITE_MIN_LEAD_MINUTES', 60),
   /** Máximo de días hacia adelante que se pueden reservar. */
