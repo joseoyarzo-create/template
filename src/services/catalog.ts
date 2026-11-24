@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import { unwrap, unwrapNullable } from '@/lib/errors'
+import { unwrapNullable } from '@/lib/errors'
 import { env } from '@/config/env'
 import type { Business, PublicCatalog } from '@/types/database'
 

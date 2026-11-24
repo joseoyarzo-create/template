@@ -25,7 +25,7 @@ export function PublicHeader() {
   const items: NavItem[] = [
     { label: 'Inicio', to: '/', enabled: true },
     { label: 'Servicios', to: '/servicios', enabled: true },
-    { label: businessConfig.features.gallery, to: '/galeria', enabled: businessConfig.features.gallery },
+    { label: 'Galería', to: '/galeria', enabled: businessConfig.features.gallery },
     { label: 'Equipo', to: '/equipo', enabled: businessConfig.features.team },
     { label: 'Contacto', to: '/contacto', enabled: true },
   ]
