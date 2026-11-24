@@ -39,7 +39,8 @@ interface AuthContextValue {
   /** Puede ver el panel (cualquier miembro). */
   canAccessAdmin: boolean
   loading: boolean
-  signIn: (email: string, password: string) => Promise<void>
+  /** Inicia sesión y devuelve las membresías del usuario (puede ser vacío). */
+  signIn: (email: string, password: string) => Promise<BusinessMembership[]>
   signOut: () => Promise<void>
   reloadMemberships: () => Promise<void>
 }
@@ -97,12 +98,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (email: string, password: string) => {
       try {
         await signInRequest(email, password)
-        await loadMemberships()
+        const rows = await fetchMyMemberships()
+        setMemberships(rows)
+        return rows
       } catch (error) {
         throw toAppError(error)
       }
     },
-    [loadMemberships],
+    [],
   )
 
   const signOut = useCallback(async () => {

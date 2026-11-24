@@ -21,7 +21,7 @@ type Tab = 'login' | 'invite'
  * debe canjear una invitación de un solo uso (ver docs/SUPABASE_SETUP.md).
  */
 export function LoginPage() {
-  const { signIn, session, canAccessAdmin, loading } = useAuth()
+  const { signIn, session, canAccessAdmin, loading, reloadMemberships } = useAuth()
   const { displayName } = useBusiness()
   const toast = useToast()
   const navigate = useNavigate()
@@ -53,7 +53,13 @@ export function LoginPage() {
     setError(null)
     setSubmitting(true)
     try {
-      await signIn(email.trim(), password)
+      const rows = await signIn(email.trim(), password)
+      if (rows.length === 0) {
+        setError(
+          'Tu cuenta no tiene acceso a ningún negocio. Si recibiste un código de invitación, actívalo en la pestaña «Activar invitación».',
+        )
+        return
+      }
       toast.success('Sesión iniciada.')
     } catch (err) {
       setError(toAppError(err).message)
@@ -86,6 +92,7 @@ export function LoginPage() {
       }
 
       await authService.redeemAdminInvite(token.trim())
+      await reloadMemberships()
       toast.success('Invitación activada. Ya puedes administrar el negocio.')
       navigate('/admin', { replace: true })
     } catch (err) {
